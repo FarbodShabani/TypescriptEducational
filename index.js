@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express()
-const port = 2882
+const port = 2828
 
 app.get('/', (req, res) => {
   res.sendFile('typeScriptExample/index.html', {root: __dirname })

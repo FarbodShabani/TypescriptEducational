@@ -8,12 +8,18 @@ resultButton.addEventListener("click", () => {
     const firstValue = firstInput.value;
     const secondValue = secondInput.value;
     const result = adding(+firstValue, +secondValue);
+    const stringResult = adding(firstValue, secondValue)
 
     console.log(result);
 
 });
 
-const adding = (a: number, b: number) => {
-    return a+b;
+const adding = (a: number | string, b: number | string) => {
+    if (typeof a === "number" && typeof b === "number") {
+        return a + b;
+    } else {
+        return a + "" +b
+    }
+    return +a+ +b;
 }
 
