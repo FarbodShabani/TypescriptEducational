@@ -1,9 +1,9 @@
-const express = require('express')
+const express = require('express');
 const app = express()
 const port = 2882
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.sendFile('typeScriptExample/index.html', {root: __dirname })
 })
 
 app.listen(port, () => {
