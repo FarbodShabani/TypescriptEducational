@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { Todos } from "../models/todos";
 
-const todos: Todos[] = [];
+let todos: Todos[] = [];
 
 const toDoRouter = Router();
 
@@ -36,10 +36,10 @@ toDoRouter.put("/todos", (req, res, next) => {
 });
 
 toDoRouter.delete("/todos/:id", (req, res, next) => {
-    const todoId = req.params.id;
-    console.log("todo", todoId);
+    const {id} = req.params;
+    console.log("todo", id);
     
-    todos.filter((todo) => todo.id !== todoId);
+    todos = todos.filter((todo) => todo.id !== id);
         return  res.status(202).json({todos});
     
 })
