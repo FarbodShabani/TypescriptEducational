@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon ./dist/index.js"
   },
   "dependencies": {
     "@types/body-parser": "^1.19.2",

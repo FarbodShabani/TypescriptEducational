@@ -15,14 +15,14 @@ toDoRouter.post("/todos", (req, res, next) => {
     todos.push(newTodo);
     res.status(201).json({ newTodo, todos });
 });
-toDoRouter.put("/todos", (req, res, next) => {
-    const editedTodoId = req.body.id;
-    const editedTodoText = req.body.text;
-    const editedTodDoIndex = todos.findIndex((todo) => todo.id === editedTodoId);
+toDoRouter.put("/todos/:id", (req, res, next) => {
+    const { id } = req.params;
+    const { text } = req.body;
+    const editedTodDoIndex = todos.findIndex((todo) => todo.id === id);
     if (editedTodDoIndex >= 0) {
         todos[editedTodDoIndex] = {
-            text: editedTodoText,
-            id: editedTodoId,
+            text: text,
+            id: id,
         };
         return res.status(200).json({ editedTodo: todos[editedTodDoIndex], todos });
     }
@@ -30,7 +30,6 @@ toDoRouter.put("/todos", (req, res, next) => {
 });
 toDoRouter.delete("/todos/:id", (req, res, next) => {
     const { id } = req.params;
-    console.log("todo", id);
     todos = todos.filter((todo) => todo.id !== id);
     return res.status(202).json({ todos });
 });

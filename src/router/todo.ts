@@ -2,6 +2,9 @@ import { Router } from "express";
 
 import { Todos } from "../models/todos";
 
+type requestBody = {text: string};
+type requestParams = {id : string}
+
 let todos: Todos[] = [];
 
 const toDoRouter = Router();
@@ -11,7 +14,7 @@ toDoRouter.get("/", (req, res, next) => {
 });
 
 toDoRouter.post("/todos", (req, res, next) => {
-    const {text} = req.body;
+    const {text} = req.body as requestBody;
     
     const newTodo: Todos = {
         id: new Date().toISOString(),
@@ -21,14 +24,15 @@ toDoRouter.post("/todos", (req, res, next) => {
     res.status(201).json({newTodo, todos});
 });
 
-toDoRouter.put("/todos", (req, res, next) => {
-    const editedTodoId = req.body.id;
-    const editedTodoText = req.body.text;
-    const editedTodDoIndex = todos.findIndex((todo) => todo.id === editedTodoId) as number;
+toDoRouter.put("/todos/:id", (req, res, next) => {
+
+    const {id} = req.params as requestParams;
+    const {text} = req.body as requestBody;
+    const editedTodDoIndex = todos.findIndex((todo) => todo.id === id) as number;
     if (editedTodDoIndex >= 0) {
         todos[editedTodDoIndex] = {
-            text: editedTodoText,
-            id: editedTodoId,
+            text: text,
+            id: id,
         }
         return  res.status(200).json({editedTodo: todos[editedTodDoIndex],todos});
     }
@@ -36,9 +40,8 @@ toDoRouter.put("/todos", (req, res, next) => {
 });
 
 toDoRouter.delete("/todos/:id", (req, res, next) => {
-    const {id} = req.params;
-    console.log("todo", id);
-    
+
+    const {id} = req.params as requestParams;
     todos = todos.filter((todo) => todo.id !== id);
         return  res.status(202).json({todos});
     
